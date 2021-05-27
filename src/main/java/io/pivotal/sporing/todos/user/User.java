@@ -44,7 +44,7 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public String getPassword() {
-        return password;
+        return "{noop}" + password;
     }
 
     @Override

@@ -1,7 +1,5 @@
 package io.pivotal.sporing.todos;
 
-import io.pivotal.sporing.todos.user.MyUserDetailsService;
-import io.pivotal.sporing.todos.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,14 +8,19 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+
+import io.pivotal.sporing.todos.user.MyUserDetailsService;
+import io.pivotal.sporing.todos.user.UserRepository;
 
 /**
  * @author Matt Stine
  */
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {	
+	
+	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -39,8 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID");
     }
-
-
+    
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {
         return new MyUserDetailsService(userRepository);
