@@ -153,6 +153,7 @@
           <apiToken>${env.SNYK_TOKEN}</apiToken>
           <args>
             <arg>--all-projects</arg>
+            <arg>--sarif-file-output=snyk.sarif</arg>
 					</args>
 				</configuration>
 			</plugin>

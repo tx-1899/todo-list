@@ -25,5 +25,13 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
-      - name: Snyk
-        run: snyk test --all-projects
+      - uses: actions/upload-artifact@v2
+        with:
+          name: SARIF
+          path: snyk.sarif
+        if: github.ref == 'refs/heads/master'
+      - name: Upload the SARIF file to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: snyk.sarif
+        if: github.ref == 'refs/heads/master'
