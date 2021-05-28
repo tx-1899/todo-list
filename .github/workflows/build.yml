@@ -23,8 +23,14 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Build with Maven
+      - name: Test
+        continue-on-error: true
         run: mvn --batch-mode --update-snapshots verify
+        if: github.ref != 'refs/heads/master'
+      - name: Test with Snyk
+        continue-on-error: true
+        run: mvn --batch-mode --update-snapshots verify
+        if: github.ref == 'refs/heads/master'
       - uses: actions/upload-artifact@v2
         with:
           name: SARIF
