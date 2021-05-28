@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo
+spec:
+  selector:
+    matchLabels:
+      app: todo
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: todo
+    spec:
+      containers:
+        - name: todo
+          image: todo
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-loadbalancer
+spec:
+  type: LoadBalancer
+  loadBalancerSourceRanges:
+    - 127.0.0.0/0
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: todo
