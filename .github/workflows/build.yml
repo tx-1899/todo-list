@@ -7,6 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -25,5 +27,3 @@ jobs:
         run: mvn --batch-mode --update-snapshots verify
       - name: Snyk
         run: snyk test --all-projects
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
