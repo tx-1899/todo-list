@@ -1,14 +1,24 @@
 package io.pivotal.sporing.todos.todolist;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.pivotal.sporing.todos.user.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Matt Stine
@@ -42,8 +52,17 @@ public class TodoList {
     public static TodoList from(TodoListRequest todoListRequest, User user) {
         return new TodoList(todoListRequest.getName(), user);
     }
+    
+    public static TodoList from(File file, User user) {
+        return new TodoList(parseFile(file), user);
+    }
+    
+    private static String parseFile(File file) {
+		// TODO set name and add todo items
+		return null;
+	}
 
-    public void merge(TodoListRequest request) {
+	public void merge(TodoListRequest request) {
         setName(request.getName());
     }
 }

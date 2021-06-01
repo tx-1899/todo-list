@@ -1,13 +1,23 @@
 package io.pivotal.sporing.todos.todolist;
 
-import io.pivotal.sporing.todos.user.User;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.zeroturnaround.zip.ZipUtil;
 
-import java.util.List;
+import io.pivotal.sporing.todos.user.User;
 
 /**
  * @author Matt Stine
@@ -35,6 +45,23 @@ public class TodoListController {
         TodoItem todoItem = itemRepository.save(TodoItem.from(todoItemRequest, todoList));
         return new ResponseEntity<>(TodoItemCreatedResponse.from(todoItem), HttpStatus.CREATED);
     }
+    
+    @PostMapping("/import")
+    public ResponseEntity<TodoListImportedResponse> create(@RequestBody TodoListImportRequest todoListImportRequest,
+            Authentication authentication) {
+    		ArrayList<TodoList> todoLists = new ArrayList<>(); 	
+    		File targetDirectory = new File("/tmp/importTodos");
+    		ZipUtil.unpack(todoListImportRequest.getZippedTodoLists(), targetDirectory);
+    		for (File file: targetDirectory.listFiles())
+    		{
+    			TodoList todoList = TodoList.from(file, getOwnerFromAuthentication(authentication));
+    			repository.save(todoList);
+    			todoLists.add(todoList);
+    		}
+			
+    		return new ResponseEntity<>(TodoListImportedResponse.from(todoLists), HttpStatus.CREATED);
+    }
+
 
     private User getOwnerFromAuthentication(Authentication authentication) {
         return (User) authentication.getPrincipal();
