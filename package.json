@@ -13,12 +13,12 @@
   },
   "homepage": "https://github.com/mstine/todo-list",
   "dependencies": {
+    "@aureooms/js-pseudo-random": "2.0.0",
+    "node-fetch": "1.6.3",
     "react": "^15.3.2",
     "react-bootstrap": "^0.31.0",
-    "node-fetch": "1.6.3",
     "react-dom": "^15.3.2",
     "webpack": "^1.12.2",
-    "react-bootstrap": "^0.31.0",
     "wowjs": "^1.1.3"
   },
   "scripts": {
