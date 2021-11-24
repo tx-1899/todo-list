@@ -1,4 +1,9 @@
 package io.pivotal.sporing.todos.todolist;
 
-public class SerializedTodoImportResponse {
+class StoreTodosXMLResponse {
+    private final String xml;
+
+    public StoreTodosXMLResponse(String xml) {
+        this.xml = xml;
+    }
 }

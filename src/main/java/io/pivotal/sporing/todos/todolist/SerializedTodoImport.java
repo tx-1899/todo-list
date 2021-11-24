@@ -1,25 +1,20 @@
 package io.pivotal.sporing.todos.todolist;
 
-    import com.fasterxml.jackson.databind.ObjectMapper;
     import org.springframework.stereotype.Component;
 
+    import java.util.ArrayList;
     import java.util.function.Function;
+    import com.thoughtworks.xstream.XStream;
 
-@Component("SerializedTodoImport")
-    public class SerializedTodoImport implements Function<String, SerializedTodoImportResponse> {
+@Component("StoreTodos")
+    public class SerializedTodoImport implements Function<ArrayList<TodoItem>, StoreTodosXMLResponse> {
 
         @Override
-        public SerializedTodoImportResponse apply(String input) {
-            ObjectMapper om = new ObjectMapper();
+        public StoreTodosXMLResponse apply(ArrayList<TodoItem> todos) {
+            XStream xStream=new XStream();
+            String xml= xStream.toXML(todos);
 
-            try {
-                ImportTodo i = om.readValue(input, ImportTodo.class);
-            } catch (Exception e) {
-                System.out.println("Exception was");
-                e.printStackTrace(System.out);
-            }
-
-            return new SerializedTodoImportResponse();
+            return new StoreTodosXMLResponse(xml);
         }
     }
 
