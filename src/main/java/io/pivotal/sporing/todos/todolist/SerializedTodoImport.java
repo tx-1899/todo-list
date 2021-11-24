@@ -11,7 +11,6 @@ package io.pivotal.sporing.todos.todolist;
         @Override
         public SerializedTodoImportResponse apply(String input) {
             ObjectMapper om = new ObjectMapper();
-            om.enableDefaultTyping();
 
             try {
                 ImportTodo i = om.readValue(input, ImportTodo.class);
