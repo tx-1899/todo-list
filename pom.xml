@@ -135,6 +135,7 @@
 					<installDirectory>target</installDirectory>
 				</configuration>
 			</plugin>
+      <!--
 			<plugin>
 				<groupId>io.snyk</groupId>
 				<artifactId>snyk-maven-plugin</artifactId>
@@ -151,11 +152,12 @@
 				<configuration>
           <apiToken>${env.SNYK_TOKEN}</apiToken>
           <args>
-            <arg>--all-projects</arg>
-            <arg>--sarif-file-output=snyk.sarif</arg>
+            <arg>-all-projects</arg>
+            <arg>-sarif-file-output=snyk.sarif</arg>
 					</args>
 				</configuration>
-			</plugin>
+      </plugin>
+      -->
 		</plugins>
 	</build>
 </project>
