@@ -30,6 +30,7 @@ RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
 
 FROM jdk
+LABEL org.opencontainers.image.source="https://github.com/garethr/todo-list
 ARG DEPENDENCY=/workspace/app/target/dependency
 EXPOSE 8080
 RUN apt-get update && apt-get install -y --no-install-recommends \
