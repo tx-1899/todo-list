@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: master
+    branches: main
   workflow_dispatch:
 
 jobs:
@@ -27,18 +27,18 @@ jobs:
       - name: Test
         continue-on-error: true
         run: mvn --batch-mode --update-snapshots verify
-        if: github.ref != 'refs/heads/master'
+        if: github.ref != 'refs/heads/main'
       - name: Test with Snyk
         continue-on-error: true
         run: mvn --batch-mode --update-snapshots verify
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
       - uses: actions/upload-artifact@v2
         with:
           name: SARIF
           path: snyk.sarif
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
       - name: Upload the SARIF file to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v1
         with:
           sarif_file: snyk.sarif
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'

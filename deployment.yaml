@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: todo
-          image: todo
+          image: purpledobie/todo-list
           ports:
             - containerPort: 8080
 ---
