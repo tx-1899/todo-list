@@ -26,8 +26,7 @@ spec:
   type: LoadBalancer
   loadBalancerSourceRanges:
     - 127.0.0.0/0
-  loadBalancerIP:
-    - 93.94.95.96
+  loadBalancerIP: 93.94.95.96
   ports:
     - port: 8080
       targetPort: 8080
